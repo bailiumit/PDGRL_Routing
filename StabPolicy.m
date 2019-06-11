@@ -1,4 +1,4 @@
-function a_t = StabPolicy(sysPara, S_t)
+function a_t = StabPolicy(sysPara, Q_t)
 %StabPolicy_DSA - 
 %
 % Syntax:  [~] = Main(curDay)

@@ -27,15 +27,15 @@ warning off;
 %--- Set system parameters ---
 sysPara.arrRate = 1;
 sysPara.tranRate = cell(2, 2);
-sysPara.tranRate{1, 1} = [0.5, 0];
-sysPara.tranRate{1, 2} = [0, 1];
-sysPara.tranRate{2, 1} = [0.5, 0];
-sysPara.tranRate{2, 2} = [0.25, 0.25];
-sysPara.thre = 10;
+sysPara.tranRate{1, 1} = [0.8, 0.3];
+sysPara.tranRate{1, 2} = [0.1, 1];
+sysPara.tranRate{2, 1} = [0.8, 0.3];
+sysPara.tranRate{2, 2} = [0.1, 1];
+sysPara.thre = 5;
 
 %--- Set simulation parameters ---
 simPara.methodType = 1;
-simPara.U = 20;
+simPara.U = 10;
 simPara.l = 0.2;
 simPara.L = 200;
 simPara.T = 30;
@@ -43,9 +43,11 @@ simPara.T = 30;
 %--- Do simulation ---
 % CompChannelSelect(sysPara, simPara);
 
-[SaTable, simVar] = Routing(sysPara, simPara);
+% [QaTable, simVar] = Routing(sysPara, simPara);
 
-disp(SaTable);
+% disp(QaTable);
+
+% tp_QaQ = Calp_QaQ(sysPara, simPara);
 
 
 %--- Stop timing ---

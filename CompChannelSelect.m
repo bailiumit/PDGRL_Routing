@@ -78,8 +78,8 @@ end
 %--- Conduct the simulation ---
 function sampleQ = DoSim(sysPara, simPara, methodType)
     simPara.methodType = methodType;
-    [SaTable, simVar] = Routing(sysPara, simPara);
-    sampleQ = SaTable(:, 1:sysPara.D);
+    [QaTable, simVar] = Routing(sysPara, simPara);
+    sampleQ = QaTable(:, 1:sysPara.D);
 end
 
 %------------- END OF SUBFUNCTION(S) --------------
