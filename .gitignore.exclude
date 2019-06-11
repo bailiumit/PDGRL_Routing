@@ -1,0 +1,9 @@
+# User-specific files
+SolveMDP_Old.m
+*.mat
+
+# User-specific folders
+Results/*
+
+# Keep .gitkeep to help reserve the folder Results
+!Results/.gitkeep 
