@@ -1,4 +1,4 @@
-function a_t = AppOracle(sysPara, S_t)
+function a_t = AppOracle(sysPara, Q_t)
 %StabPolicy_DSA - 
 %
 % Syntax:  [~] = Main(curDay)
@@ -25,23 +25,20 @@ function a_t = AppOracle(sysPara, S_t)
 %------------- BEGIN CODE --------------
 
 %--- Take action according to the policy ---
-Q_t = S_t(1 : sysPara.D);
-con_t = S_t(sysPara.D+1 : sysPara.D+sysPara.D);
-switch 10*con_t(1) + con_t(2)
-    case 0
-        a_t = 1;
-    case 1
-        a_t = 2;
-    case 10
-        a_t = 1;
-    case 11
-        if Q_t(2) == 0
-            a_t = 1;
-        else
-            a_t = 2;
-        end
-    otherwise
-        disp('Error in AppOracle');
+% if Q_t(2) == 0 && Q_t(1) >= 2
+%     a_t = 2;
+% else
+%     a_t = 1;
+% end
+
+if Q_t(1) > 0 && Q_t(2) <= sysPara.thre
+    a_t = 2;
+else
+    a_t = 1;
+end
+
+if max(Q_t) > 10
+    a_t = StabPolicy(sysPara, Q_t);
 end
 
 %------------- END OF CODE --------------

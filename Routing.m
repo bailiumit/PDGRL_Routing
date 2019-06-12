@@ -31,12 +31,7 @@ simVar.k = 1;
 simVar.isIni = true;
 simVar.isLearn = true;
 simVar.N_in = 0;
-% [simVar.N_Qa, simVar.tP_QaQ] = IniSaS(sysPara, simPara);
-
-    simVar.N_Qa = zeros(simPara.U+1, simPara.U+1, 2);
-    simVar.tP_QaQ = cell(simPara.U+1, simPara.U+1, 2);
-    [simVar.tP_QaQ{:}] = deal(zeros(3, 3));
-
+[simVar.N_Qa, simVar.tP_QaQ] = IniSaS(sysPara, simPara);
 simVar.aTable = zeros(simPara.U+1, simPara.U+1);
 
 %--- Begin simulation ---
@@ -81,7 +76,7 @@ function [iniN_Qa, initP_QaQ] = IniSaS(sysPara, simPara)
     % Calculate N_Qa and tP_QaQ
     for indQa = 1:1:(simPara.U+1)^2 * 2
         subQa = cell(1, 2 + 1);
-        [subQa{:}] = ind2sub([U+1, U+1, 2], indQa);
+        [subQa{:}] = ind2sub([simPara.U+1, simPara.U+1, 2], indQa);
         % Make the positivity of the elements in P_QaQ the same as p_QaQ
         subNonZero = p_QaQ{subQa{:}} > 0;
         initP_QaQ{subQa{:}}(subNonZero) = 1;

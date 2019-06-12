@@ -31,7 +31,7 @@ if simVar.isIni && simVar.isLearn
     % Estimate the trasition probabilities
     estp_SaS = EstSaS(sysPara, simPara, simVar);
     % Obtain optimal policy for the estimated MDP
-    simVar = SolveMDP(sysPara, simPara, simVar, estp_SaS);
+    simVar.aTable = SolveMDP(sysPara, simPara, estp_SaS);
     
     save('PDGRL_Var.mat', 'estp_SaS', 'simVar');
 end

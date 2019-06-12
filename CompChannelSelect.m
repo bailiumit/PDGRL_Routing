@@ -29,7 +29,8 @@ function CompChannelSelect(sysPara, simPara)
 Q_Stable = DoSim(sysPara, simPara, 1);
 
 %--- Test PDGRL ---
-Q_PDGRL = DoSim(sysPara, simPara, 2);
+% Q_PDGRL = DoSim(sysPara, simPara, 2);
+Q_PDGRL = zeros(simPara.T, 2);
 
 %--- Test ~π* + π0 ---
 Q_TruOracle = DoSim(sysPara, simPara, 3);
@@ -65,9 +66,10 @@ hold on;
 plot(tArray, aveQ_TruOracle);
 hold on;
 plot(tArray, aveQ_AppOracle);
-xlabel('t','fontsize',10); 
-ylabel('Average total queue length up to t','fontsize',10);
+xlabel('t','fontsize',14); 
+ylabel('Average total queue length up to t','fontsize',14);
 legend('$\pi_0$', 'PDGRL', '$\tilde{\pi}^* + \pi_0$', 'Approximated $\pi^*$', 'Interpreter','latex'); 
+% legend('$\pi_0$', 'PDGRL', '$\tilde{\pi}^* + \pi_0$', 'Interpreter','latex'); 
 grid on;
 
 %------------- END OF CODE --------------
@@ -79,7 +81,7 @@ end
 function sampleQ = DoSim(sysPara, simPara, methodType)
     simPara.methodType = methodType;
     [QaTable, simVar] = Routing(sysPara, simPara);
-    sampleQ = QaTable(:, 1:sysPara.D);
+    sampleQ = QaTable(:, 1:2);
 end
 
 %------------- END OF SUBFUNCTION(S) --------------

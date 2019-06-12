@@ -25,12 +25,12 @@ clear global;
 warning off;
 
 %--- Set system parameters ---
-sysPara.arrRate = 1;
+sysPara.arrRate = 0.8;
 sysPara.tranRate = cell(2, 2);
-sysPara.tranRate{1, 1} = [0.8, 0.3];
-sysPara.tranRate{1, 2} = [0.1, 1];
-sysPara.tranRate{2, 1} = [0.8, 0.3];
-sysPara.tranRate{2, 2} = [0.1, 1];
+sysPara.tranRate{1, 1} = [0.9, 0.1];
+sysPara.tranRate{1, 2} = [0.1, 0.9];
+sysPara.tranRate{2, 1} = [0.9, 0.1];
+sysPara.tranRate{2, 2} = [0.1, 0.9];
 sysPara.thre = 5;
 
 %--- Set simulation parameters ---
@@ -38,17 +38,18 @@ simPara.methodType = 1;
 simPara.U = 10;
 simPara.l = 0.2;
 simPara.L = 200;
-simPara.T = 30;
-
+simPara.T = 50000;
+10
 %--- Do simulation ---
-% CompChannelSelect(sysPara, simPara);
+CompChannelSelect(sysPara, simPara);
 
 % [QaTable, simVar] = Routing(sysPara, simPara);
 
 % disp(QaTable);
 
 % tp_QaQ = Calp_QaQ(sysPara, simPara);
-
+% aTable = SolveMDP(sysPara, simPara, tp_QaQ);
+% disp(aTable);
 
 %--- Stop timing ---
 toc;
