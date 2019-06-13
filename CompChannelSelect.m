@@ -29,8 +29,8 @@ function CompChannelSelect(sysPara, simPara)
 Q_Stable = DoSim(sysPara, simPara, 1);
 
 %--- Test PDGRL ---
-% Q_PDGRL = DoSim(sysPara, simPara, 2);
-Q_PDGRL = zeros(simPara.T, 2);
+Q_PDGRL = DoSim(sysPara, simPara, 2);
+% Q_PDGRL = zeros(simPara.T, 2);
 
 %--- Test ~π* + π0 ---
 Q_TruOracle = DoSim(sysPara, simPara, 3);

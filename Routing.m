@@ -31,7 +31,7 @@ simVar.k = 1;
 simVar.isIni = true;
 simVar.isLearn = true;
 simVar.N_in = 0;
-[simVar.N_Qa, simVar.tP_QaQ] = IniSaS(sysPara, simPara);
+[simVar.N_Qa, simVar.tP_QaQ, simVar.tp_QaQ] = IniSaS(sysPara, simPara);
 simVar.aTable = zeros(simPara.U+1, simPara.U+1);
 
 %--- Begin simulation ---
@@ -68,19 +68,31 @@ end
 %------------- BEGIN SUBFUNCTION(S) --------------
 
 %--- Initialize N_Qa and tP_QaQ ---
-function [iniN_Qa, initP_QaQ] = IniSaS(sysPara, simPara)
+function [iniN_Qa, initP_QaQ, initp_QaQ] = IniSaS(sysPara, simPara)
     p_QaQ = Calp_QaQ(sysPara, simPara);
     iniN_Qa = zeros(simPara.U+1, simPara.U+1, 2);
     initP_QaQ = cell(simPara.U+1, simPara.U+1, 2);
     [initP_QaQ{:}] = deal(zeros(3, 3));
-    % Calculate N_Qa and tP_QaQ
+    initp_QaQ = cell(simPara.U+1, simPara.U+1, 2);
+    [initp_QaQ{:}] = deal(zeros(3, 3));
+    % % Calculate N_Qa and tP_QaQ
+    % for indQa = 1:1:(simPara.U+1)^2 * 2
+    %     subQa = cell(1, 2 + 1);
+    %     [subQa{:}] = ind2sub([simPara.U+1, simPara.U+1, 2], indQa);
+    %     % Make the positivity of the elements in P_QaQ the same as p_QaQ
+    %     subNonZero = p_QaQ{subQa{:}} > 0;
+    %     initP_QaQ{subQa{:}}(subNonZero) = 1;
+    %     iniN_Qa(subQa{:}) = sum(reshape(initP_QaQ{subQa{:}}, [], 1));
+    % end
+
+    % Initialize tp_QaQ
     for indQa = 1:1:(simPara.U+1)^2 * 2
         subQa = cell(1, 2 + 1);
         [subQa{:}] = ind2sub([simPara.U+1, simPara.U+1, 2], indQa);
         % Make the positivity of the elements in P_QaQ the same as p_QaQ
         subNonZero = p_QaQ{subQa{:}} > 0;
-        initP_QaQ{subQa{:}}(subNonZero) = 1;
-        iniN_Qa(subQa{:}) = sum(reshape(initP_QaQ{subQa{:}}, [], 1));
+        initp_QaQ{subQa{:}}(subNonZero) = 1;
+        initp_QaQ{subQa{:}} = initp_QaQ{subQa{:}}/sum(reshape(initp_QaQ{subQa{:}}, [], 1));
     end
 end
 
@@ -114,18 +126,22 @@ function simVar = CalSimVar(sysPara, simPara, simVar, t, Q_t, a_t, Q_tp1)
         subdS = num2cell(dQ_t+2);
         simVar.tP_QaQ{subQa{:}}(subdS{:}) = simVar.tP_QaQ{subQa{:}}(subdS{:}) + 1;
         % Decide whether to start a new episode & update k and isIni
-        if simVar.N_in > simPara.L*sqrt(simVar.k)
-            simVar.isIni = true;
-            simVar.k = simVar.k + 1;
-            simVar.N_in = 0;
-            % Decide whether to explore or exploit
-            if rand >= simPara.l*1/sqrt(simVar.k)
-                simVar.isLearn = true;
+        if simPara.methodType == 2
+            if simVar.N_in > simPara.L*sqrt(simVar.k)
+                simVar.isIni = true;
+                simVar.k = simVar.k + 1;
+                simVar.N_in = 0;
+                % Decide whether to explore or exploit
+                if rand >= simPara.l*1/sqrt(simVar.k)
+                    simVar.isLearn = true;
+                else
+                    simVar.isLearn = false;
+                end
+                % Display the learning process
+                disp(['t = ' , num2str(t), ', k = ', num2str(simVar.k), ', isLearn = ', num2str(simVar.isLearn)]);
             else
-                simVar.isLearn = false;
+                simVar.isIni = false;
             end
-        else
-            simVar.isIni = false;
         end
     end 
 end

@@ -1,7 +1,7 @@
 function aTable = QolveMDP(sysPara, simPara, tp_QaQ)
-%QolveMDP_DQA - 
+%SolveMDP_DQA - 
 %
-% Qyntax:  [~] = Main(curDay)
+% Syntax:  [~] = Main(curDay)
 %
 % Inputs:
 %    curDay - Current day(args)        
@@ -13,13 +13,13 @@ function aTable = QolveMDP(sysPara, simPara, tp_QaQ)
 %    none
 %
 % Other m-files required: turningChoice.mat, complianceRate.mat
-% Qubfunctions: none
+% Subfunctions: none
 % MAT-files required: none
 %
-% Qee also: none
+% See also: none
 
 % Author: Bai Liu
-% Laboratory for Information and Decision Qystems, Massachusetts Institute of Technology, Cambridge, MA
+% Laboratory for Information and Decision Systems, Massachusetts Institute of Technology, Cambridge, MA
 % E-mail: bailiu@mit.edu
 % 2019.06; Last revision: 2019.06.12
 
@@ -50,9 +50,6 @@ while spanV > accuracy
     end
     % Calculate the span of value functions to justify whether to terminate
     spanV = peak2peak(reshape(curV - preV, [], 1));
-
-    % disp(mean(reshape(curV - preV, [], 1)));
-
 end
 
 %------------- END OF CODE --------------
