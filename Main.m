@@ -37,21 +37,11 @@ sysPara.thre = 5;
 simPara.methodType = 1;
 simPara.U = 10;
 simPara.l = 0.2;
-simPara.L = 50;
-simPara.T = 1000;
+simPara.L = 100;
+simPara.T = 100000;
 
 %--- Do simulation ---
 CompChannelSelect(sysPara, simPara);
-
-% [QaTable, simVar] = Routing(sysPara, simPara);
-
-% disp(QaTable);
-
-% tp_QaQ = Calp_QaQ(sysPara, simPara);
-% aTable = SolveMDP(sysPara, simPara, tp_QaQ);
-% disp(aTable);
-
-% [QaTable, simVar] = Routing(sysPara, simPara);
 
 %--- Stop timing ---
 toc;
