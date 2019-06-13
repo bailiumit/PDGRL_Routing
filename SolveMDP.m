@@ -1,4 +1,4 @@
-function aTable = QolveMDP(sysPara, simPara, tp_QaQ)
+function aTable = SolveMDP(simPara, tp_QaQ)
 %SolveMDP_DQA - 
 %
 % Syntax:  [~] = Main(curDay)
@@ -21,14 +21,15 @@ function aTable = QolveMDP(sysPara, simPara, tp_QaQ)
 % Author: Bai Liu
 % Laboratory for Information and Decision Systems, Massachusetts Institute of Technology, Cambridge, MA
 % E-mail: bailiu@mit.edu
-% 2019.06; Last revision: 2019.06.12
+% 2019.06; Last revision: 2019.06.13
 
 %------------- BEGIN CODE --------------
 
 %--- Initialize variables ---
-curV = zeros(simPara.U+1, simPara.U+1);
-preV = zeros(simPara.U+1, simPara.U+1);
-aTable = zeros(simPara.U+1, simPara.U+1);
+U = simPara.U;
+curV = zeros(U+1, U+1);
+preV = zeros(U+1, U+1);
+aTable = zeros(U+1, U+1);
 spanV = Inf;
 accuracy = 1e-2;
 
@@ -36,12 +37,12 @@ accuracy = 1e-2;
 while spanV > accuracy
     % Update preV
     preV = curV;
-    parfor indQ = 1:1:(simPara.U+1)^2      
+    parfor indQ = 1:1:(U+1)^2      
         % Calculate the index for the current state
         subQ = cell(1, 2);
-        [subQ{:}] = ind2sub([simPara.U+1, simPara.U+1], indQ);
+        [subQ{:}] = ind2sub([U+1, U+1], indQ);
         % Calculate stage costs
-        aveV = CalAveValue(sysPara, simPara, subQ, tp_QaQ, preV);
+        aveV = CalAveValue(U, subQ, tp_QaQ, preV);
         % Update value functions
         [curV(indQ), aTable(indQ)] = min(aveV);
     end
@@ -55,7 +56,7 @@ end
 %------------- BEGIN SUBFUNCTION(S) --------------
 
 %--- Calculate value functions for neighbor states ---
-function aveV = CalAveValue(sysPara, simPara, subQ, tp_QaQ, V_Q)
+function aveV = CalAveValue(U, subQ, tp_QaQ, V_Q)
     aveV = zeros(1, 2);
     arrQ = [subQ{:}];
     % Calculate value functions
@@ -67,7 +68,7 @@ function aveV = CalAveValue(sysPara, simPara, subQ, tp_QaQ, V_Q)
         arrdQ = [subdQ{:}];
         arrQp1 = arrQ+arrdQ-2;
         subQp1 = num2cell(arrQp1);
-        if min(arrQp1) >= 1 && max(arrQp1) <= simPara.U+1
+        if min(arrQp1) >= 1 && max(arrQp1) <= U+1
             neiV(subdQ{:}) = V_Q(subQp1{:});
         end
     end

@@ -43,7 +43,7 @@ for indQa = 1:1:(simPara.U+1)^2 * 2
     arrAggQ(arrQ>=sysPara.thre+2 & arrQ<=simPara.U) = 3;
     arrAggQ(arrQ==simPara.U+1) = 4;
     % Calculate unit transition probabilities
-    pUnit = CalUnit(sysPara, simPara);
+    pUnit = CalUnit(sysPara);
     % Calculate tp_QaQ
     tp_QaQ{subQa{:}} = TruBd(pUnit, arrAggQ, arra);
 end
@@ -54,7 +54,7 @@ end
 %------------- BEGIN SUBFUNCTION(S) --------------
 
 %--- Calculate unit transition probabilities ---
-function pUnit = CalUnit(sysPara, simPara)
+function pUnit = CalUnit(sysPara)
     pUnit = cell(2, 2, 2);
     % Calculate unit transition matrix
     a = sysPara.arrRate;

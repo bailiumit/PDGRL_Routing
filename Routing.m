@@ -57,7 +57,7 @@ for t = 1:1:simPara.T
     % Obtain S_{t+1}
     Q_tp1 = CalNewS(sysPara, Q_t, a_t);
     % Updates
-    simVar = CalSimVar(sysPara, simPara, simVar, t, Q_t, a_t, Q_tp1);
+    simVar = CalSimVar(simPara, simVar, t, Q_t, a_t, Q_tp1);
     QaTable(t, : ) = [Q_t, a_t];
     Q_t = Q_tp1;
 end
@@ -75,16 +75,6 @@ function [iniN_Qa, initP_QaQ, initp_QaQ] = IniSaS(sysPara, simPara)
     [initP_QaQ{:}] = deal(zeros(3, 3));
     initp_QaQ = cell(simPara.U+1, simPara.U+1, 2);
     [initp_QaQ{:}] = deal(zeros(3, 3));
-    % % Calculate N_Qa and tP_QaQ
-    % for indQa = 1:1:(simPara.U+1)^2 * 2
-    %     subQa = cell(1, 2 + 1);
-    %     [subQa{:}] = ind2sub([simPara.U+1, simPara.U+1, 2], indQa);
-    %     % Make the positivity of the elements in P_QaQ the same as p_QaQ
-    %     subNonZero = p_QaQ{subQa{:}} > 0;
-    %     initP_QaQ{subQa{:}}(subNonZero) = 1;
-    %     iniN_Qa(subQa{:}) = sum(reshape(initP_QaQ{subQa{:}}, [], 1));
-    % end
-
     % Initialize tp_QaQ
     for indQa = 1:1:(simPara.U+1)^2 * 2
         subQa = cell(1, 2 + 1);
@@ -114,7 +104,7 @@ function Q_tp1 = CalNewS(sysPara, Q_t, a_t)
 end
 
 %--- Update simVar ---
-function simVar = CalSimVar(sysPara, simPara, simVar, t, Q_t, a_t, Q_tp1)
+function simVar = CalSimVar(simPara, simVar, t, Q_t, a_t, Q_tp1)
     if max(Q_t) <= simPara.U
         % Update N_Qa and N_in
         subQa = num2cell([Q_t+1, a_t]);

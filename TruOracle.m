@@ -30,7 +30,7 @@ if t == 1
     % Obtain the transition matrices for the truncated MDP
     tp_QaQ = Calp_QaQ(sysPara, simPara);
     % Obtain ~π*
-    simVar.aTable = SolveMDP(sysPara, simPara, tp_QaQ);    
+    simVar.aTable = SolveMDP(simPara, tp_QaQ);    
 end
 
 %--- Take action according to the policy ---

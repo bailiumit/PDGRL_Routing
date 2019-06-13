@@ -30,7 +30,6 @@ Q_Stable = DoSim(sysPara, simPara, 1);
 
 %--- Test PDGRL ---
 Q_PDGRL = DoSim(sysPara, simPara, 2);
-% Q_PDGRL = zeros(simPara.T, 2);
 
 %--- Test ~π* + π0 ---
 Q_TruOracle = DoSim(sysPara, simPara, 3);
@@ -80,7 +79,7 @@ end
 %--- Conduct the simulation ---
 function sampleQ = DoSim(sysPara, simPara, methodType)
     simPara.methodType = methodType;
-    [QaTable, simVar] = Routing(sysPara, simPara);
+    [QaTable, ~] = Routing(sysPara, simPara);
     sampleQ = QaTable(:, 1:2);
 end
 
