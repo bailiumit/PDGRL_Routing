@@ -21,7 +21,7 @@ function CompChannelSelect(sysPara, simPara)
 % Author: Bai Liu
 % Laboratory for Information and Decision Systems, Massachusetts Institute of Technology, Cambridge, MA
 % E-mail: bailiu@mit.edu
-% 2019.06; Last revision: 2019.06.10
+% 2019.06; Last revision: 2019.06.13
 
 %------------- BEGIN CODE --------------
 
@@ -36,17 +36,17 @@ Q_PDGRL = DoSim(sysPara, simPara, 2);
 Q_TruOracle = DoSim(sysPara, simPara, 3);
 
 %--- Test approximated π* ---
-Q_AppOracle = DoSim(sysPara, simPara, 4);
+% Q_AppOracle = DoSim(sysPara, simPara, 4);
 
 %--- Calculate average queue ---
 aveQ_Stable = zeros(simPara.T, 1);
 aveQ_PDGRL = zeros(simPara.T, 1);
 aveQ_TruOracle = zeros(simPara.T, 1);
-aveQ_AppOracle = zeros(simPara.T, 1);
+% aveQ_AppOracle = zeros(simPara.T, 1);
 aveQ_Stable(1) = sum(Q_Stable(1, : ));
 aveQ_PDGRL(1) = sum(Q_PDGRL(1, : ));
 aveQ_TruOracle(1) = sum(Q_TruOracle(1, : ));
-aveQ_AppOracle(1) = sum(Q_AppOracle(1, : ));
+% aveQ_AppOracle(1) = sum(Q_AppOracle(1, : ));
 for t = 2:1:simPara.T
     if mod(t, simPara.T/100) == 0
         disp(['Average calculation at t = ', num2str(t)]);
@@ -54,7 +54,7 @@ for t = 2:1:simPara.T
     aveQ_Stable(t) = (aveQ_Stable(t-1)*(t-1) + sum(Q_Stable(t, : )))/t;
     aveQ_PDGRL(t) = (aveQ_PDGRL(t-1)*(t-1) + sum(Q_PDGRL(t, : )))/t;
     aveQ_TruOracle(t) = (aveQ_TruOracle(t-1)*(t-1) + sum(Q_TruOracle(t, : )))/t;
-    aveQ_AppOracle(t) = (aveQ_AppOracle(t-1)*(t-1) + sum(Q_AppOracle(t, : )))/t;
+    % aveQ_AppOracle(t) = (aveQ_AppOracle(t-1)*(t-1) + sum(Q_AppOracle(t, : )))/t;
 end
 
 %--- Draw the figure ---
@@ -64,12 +64,12 @@ hold on;
 plot(tArray, aveQ_PDGRL);
 hold on;
 plot(tArray, aveQ_TruOracle);
-hold on;
-plot(tArray, aveQ_AppOracle);
+% hold on;
+% plot(tArray, aveQ_AppOracle);
 xlabel('t','fontsize',14); 
 ylabel('Average total queue length up to t','fontsize',14);
-legend('$\pi_0$', 'PDGRL', '$\tilde{\pi}^* + \pi_0$', 'Approximated $\pi^*$', 'Interpreter','latex'); 
-% legend('$\pi_0$', 'PDGRL', '$\tilde{\pi}^* + \pi_0$', 'Interpreter','latex'); 
+% legend('$\pi_0$', 'PDGRL', '$\tilde{\pi}^* + \pi_0$', 'Approximated $\pi^*$', 'Interpreter','latex'); 
+legend('$\pi_0$', 'PDGRL', '$\tilde{\pi}^* + \pi_0$', 'Interpreter','latex'); 
 grid on;
 
 %------------- END OF CODE --------------

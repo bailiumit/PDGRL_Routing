@@ -36,10 +36,7 @@ accuracy = 1e-2;
 while spanV > accuracy
     % Update preV
     preV = curV;
-    % parfor indQ = 1:1:(simPara.U+1)^2 * 2^2
-
-    for indQ = 1:1:(simPara.U+1)^2
-      
+    parfor indQ = 1:1:(simPara.U+1)^2      
         % Calculate the index for the current state
         subQ = cell(1, 2);
         [subQ{:}] = ind2sub([simPara.U+1, simPara.U+1], indQ);

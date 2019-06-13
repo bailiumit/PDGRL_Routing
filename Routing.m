@@ -21,7 +21,7 @@ function [QaTable, simVar] = Routing(sysPara, simPara)
 % Author: Bai Liu
 % Laboratory for Information and Decision Systems, Massachusetts Institute of Technology, Cambridge, MA
 % E-mail: bailiu@mit.edu
-% 2019.06; Last revision: 2019.06.11
+% 2019.06; Last revision: 2019.06.13
 
 %------------- BEGIN CODE --------------
 

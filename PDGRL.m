@@ -32,9 +32,8 @@ if simVar.isIni && simVar.isLearn
     simVar = EstQaQ(sysPara, simPara, simVar);
     % Obtain optimal policy for the estimated MDP
     simVar.aTable = SolveMDP(sysPara, simPara, simVar.tp_QaQ);
-    
+    % Save variables
     save('PDGRL_Var.mat', 'simVar');
-
 end
 
 %--- Take action according to the policy ---
